@@ -10,7 +10,7 @@
   "image": "sysdist/{arch}-addon-nabito",
   "options": {
     "message": "custom things",
-    "mqtt_url": "mqtt://mqttuser:changeme@192.168.1.6:1883",
+    "mqtt_url": "mqtt://mqttuser:changeme@localhost:1883",
     "secret_key_base": "0243b1973ae4cf778ea60e5874f4b58ae69eb016251753c8c8f5ccd040850f1ff4036255d35e4521e8fab2d6dd04adeb704d507ae914ca7189585f5eabcd68da",
     "logins": [
       { "username": "beer", "password": "123456" },
