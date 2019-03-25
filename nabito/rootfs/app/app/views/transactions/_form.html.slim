@@ -1,0 +1,45 @@
+= form_for @transaction do |f|
+  - if @transaction.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@transaction.errors.count, "error")} prohibited this transaction from being saved:"
+      ul
+        - @transaction.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :debtor_id
+    = f.number_field :debtor_id
+  .field
+    = f.label :creditor_id
+    = f.number_field :creditor_id
+  .field
+    = f.label :connector
+    = f.text_field :connector
+  .field
+    = f.label :kWhs_used
+    = f.text_field :kWhs_used
+  .field
+    = f.label :average_price_per_kWh
+    = f.text_field :average_price_per_kWh
+  .field
+    = f.label :currency
+    = f.text_field :currency
+  .field
+    = f.label :amount
+    = f.text_field :amount
+  .field
+    = f.label :date_posted
+    = f.date_select :date_posted
+  .field
+    = f.label :completed_at
+    = f.datetime_select :completed_at
+  .field
+    = f.label :status
+    = f.text_field :status
+  .field
+    = f.label :meter_kWhs_start
+    = f.text_field :meter_kWhs_start
+  .field
+    = f.label :meter_kWhs_finish
+    = f.text_field :meter_kWhs_finish
+  .actions = f.submit

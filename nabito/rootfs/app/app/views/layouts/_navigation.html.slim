@@ -1,0 +1,53 @@
+/ / navigation styled for Bootstrap 3.0
+/ nav#mainNav.navbar.navbar-default.navbar-fixed-top
+/   .container-fluid
+/     .navbar-header
+/       button.navbar-toggle.collapsed aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" type="button" 
+/         span.sr-only Toggle navigation
+/         span.icon-bar
+/         span.icon-bar
+/         span.icon-bar
+/       = link_to "NABITO - personal metering network", root_path, class: "navbar-brand nav-link"
+/     #navbar.navbar-collapse.collapse
+/       ul.nav.navbar-nav.navbar-right
+/         == render 'layouts/links_auth'
+/         li.dropdown.nav-item
+/           a.dropdown-toggle.nav-link aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button" 
+/             = t('.lang.language')
+/             span.caret
+/           ul.dropdown-menu
+/             li = link_to t('.lang.english'), locale: :en
+/             li = link_to t('.lang.slovak'), locale: :sk
+/         /    li = link_to t('.lang.czech'), locale: :cs
+/         /    li = link_to t('.lang.german'), locale: :de
+/         /    li = link_to t('.lang.polish'), locale: :pl
+
+
+/      ul.nav.navbar-nav
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  = link_to "NABITO - mini-metering app", root_path, class: "navbar-brand"
+  / a.navbar-brand[href="#"]
+  /   | Nabito - the metering network
+  button.navbar-toggler[type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"]
+    span.navbar-toggler-icon
+  #navbarSupportedContent.collapse.navbar-collapse
+    ul.navbar-nav.mr-auto
+      li.nav-item = link_to t('.connectors'), connectors_path, class: "nav-link"
+      li.nav-item = link_to t('.transactions'), transactions_path, class: "nav-link"      
+      / li.nav-item
+      /   a.nav-link.disabled[href="#"]
+      /     | Disabled
+    ul.navbar-nav
+      == render 'layouts/links_auth'
+      li.nav-item.dropdown
+        a#navbarDropdown.nav-link.dropdown-toggle[href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+          | Language
+        .dropdown-menu[aria-labelledby="navbarDropdown"]
+          = link_to t('.lang.english'), url_for( :locale => 'en' ), class: "dropdown-item"
+          .dropdown-divider          
+          = link_to t('.lang.slovak'), url_for( :locale => 'sk' ), class: "dropdown-item"          
+    / form.form-inline.my-2.my-lg-0
+    /   input.form-control.mr-sm-2[type="search" placeholder="Search" aria-label="Search"]
+    /   button.btn.btn-outline-success.my-2.my-sm-0[type="submit"]
+    /     | Search
+    

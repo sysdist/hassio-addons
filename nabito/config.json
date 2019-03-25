@@ -1,0 +1,41 @@
+{
+  "name": "Rails app",
+  "version": "0.7",
+  "slug": "rails_app",
+  "description": "My first real add-on in Rails!",
+  "startup": "application",
+  "boot": "auto",
+  "homeassistant_api": true,
+  "arch": ["amd64", "armv7"],  
+  "image": "sysdist/{arch}-addon-nabito",
+  "options": {
+    "message": "custom things",
+    "mqtt_url": "mqtt://mqttuser:changeme@192.168.1.6:1883",
+    "secret_key_base": "0243b1973ae4cf778ea60e5874f4b58ae69eb016251753c8c8f5ccd040850f1ff4036255d35e4521e8fab2d6dd04adeb704d507ae914ca7189585f5eabcd68da",
+    "logins": [
+      { "username": "beer", "password": "123456" },
+      { "username": "cheep", "password": "654321" }
+    ],
+    "link": "http://example.com/",
+    "size": 15,
+    "count": 1.2,
+    "target": "beer"
+  },
+  "schema": {
+    "message": "str",
+    "mqtt_url": "str",
+    "secret_key_base": "str",
+    "logins": [
+      { "username": "str", "password": "str" }
+    ],
+    "link": "url",
+    "size": "int(5,20)",
+    "count": "float",
+    "target": "str",
+    "not_need": "str?"
+  },
+  "ports": {
+    "3000/tcp": 3000
+  }
+  
+}

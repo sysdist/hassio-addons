@@ -1,0 +1,4 @@
+.dockerignore
+.git
+rootfs/nabito/logs/
+rootfs/nabit/tmp/

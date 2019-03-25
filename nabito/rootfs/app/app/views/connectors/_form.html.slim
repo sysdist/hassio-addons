@@ -1,0 +1,60 @@
+= form_for @connector do |f|
+  - if @connector.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@connector.errors.count, "error")} prohibited this connector from being saved:"
+      ul
+        - @connector.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :owner
+    = f.number_field :owner
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :command_topic
+    = f.text_field :command_topic
+  .field
+    = f.label :state_topic
+    = f.text_field :state_topic
+  .field
+    = f.label :json_attributes_topic
+    = f.text_field :json_attributes_topic
+  .field
+    = f.label :payload_on
+    = f.text_field :payload_on
+  .field
+    = f.label :payload_off
+    = f.text_field :payload_off
+  .field
+    = f.label :state_on
+    = f.text_field :state_on
+  .field
+    = f.label :state_off
+    = f.text_field :state_off
+  .field
+    = f.label :power
+    = f.text_field :power
+  .field
+    = f.label :voltage
+    = f.number_field :voltage
+  .field
+    = f.label :i_max
+    = f.text_field :i_max
+  .field
+    = f.label :price_per_kWh
+    = f.text_field :price_per_kWh
+  .field
+    = f.label :frequency
+    = f.number_field :frequency
+  .field
+    = f.label :state
+    = f.text_field :state
+  .field
+    = f.label :current_user
+    = f.number_field :current_user
+  .field
+    = f.label :current_tnx
+    = f.number_field :current_tnx
+  .actions = f.submit

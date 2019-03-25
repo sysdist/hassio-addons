@@ -1,0 +1,42 @@
+p#notice = notice
+
+p
+  strong Debtor:
+  = @transaction.debtor_id
+p
+  strong Creditor:
+  = @transaction.creditor_id
+p
+  strong Connector:
+  = @transaction.connector
+p
+  strong Kwhs used:
+  = @transaction.kWhs_used
+p
+  strong Average price per kwh:
+  = @transaction.average_price_per_kWh
+p
+  strong Currency:
+  = @transaction.currency
+p
+  strong Amount:
+  = @transaction.amount
+p
+  strong Date posted:
+  = @transaction.date_posted
+p
+  strong Completed at:
+  = @transaction.completed_at
+p
+  strong Status:
+  = @transaction.status
+p
+  strong Meter kwhs start:
+  = @transaction.meter_kWhs_start
+p
+  strong Meter kwhs finish:
+  = @transaction.meter_kWhs_finish
+
+=> link_to 'Edit', edit_transaction_path(@transaction)
+'|
+=< link_to 'Back', transactions_path

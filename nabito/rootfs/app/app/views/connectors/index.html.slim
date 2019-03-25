@@ -1,0 +1,53 @@
+h1 Listing connectors
+
+table
+  thead
+    tr
+      th Owner
+      th Name
+      th Command topic
+      th State topic
+      th Json attributes topic
+      th Payload on
+      th Payload off
+      th State on
+      th State off
+      th Power
+      th Voltage
+      th I max
+      th Price per kwh
+      th Frequency
+      th State
+      th Current user
+      th Current tnx
+      th
+      th
+      th
+
+  tbody
+    - @connectors.each do |connector|
+      tr
+        td = connector.user.email
+        td = connector.name
+        td = connector.command_topic
+        td = connector.state_topic
+        td = connector.json_attributes_topic
+        td = connector.payload_on
+        td = connector.payload_off
+        td = connector.state_on
+        td = connector.state_off
+        td = connector.power
+        td = connector.voltage
+        td = connector.i_max
+        td = connector.price_per_kWh
+        td = connector.frequency
+        td = connector.state
+        td = connector.current_user
+        td = connector.current_tnx
+        td = link_to 'Show', connector
+        td = link_to 'Edit', edit_connector_path(connector)
+        td = link_to 'Destroy', connector, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Connector', new_connector_path

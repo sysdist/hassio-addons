@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  owner: 1
+  name: MyString
+  command_topic: MyString
+  state_topic: MyString
+  json_attributes_topic: MyString
+  payload_on: MyString
+  payload_off: MyString
+  state_on: MyString
+  state_off: MyString
+  power: 9.99
+  voltage: 1
+  i_max: 9.99
+  price_per_kWh: 9.99
+  frequency: 1
+  state: MyString
+  current_user: 1
+  current_tnx: 1
+
+two:
+  owner: 1
+  name: MyString
+  command_topic: MyString
+  state_topic: MyString
+  json_attributes_topic: MyString
+  payload_on: MyString
+  payload_off: MyString
+  state_on: MyString
+  state_off: MyString
+  power: 9.99
+  voltage: 1
+  i_max: 9.99
+  price_per_kWh: 9.99
+  frequency: 1
+  state: MyString
+  current_user: 1
+  current_tnx: 1
