@@ -20,7 +20,7 @@ export MQTT_URL="$(jq --raw-output '.mqtt_url' $CONFIG_PATH)"
 echo "SECRET_KEY_BASE is $SECRET_KEY_BASE"
 export RAILS_ENV=production
 
-if [ !og -f /data/production.sqlite3 ]; then
+if [ ! -f /data/production.sqlite3 ]; then
   export DISABLE_DATABASE_ENVIRONMENT_CHECK=1 
   bundle exec rails db:setup
 else

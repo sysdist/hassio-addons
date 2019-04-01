@@ -1,6 +1,6 @@
 ######################
 # Stage: builder
-FROM ruby:2.6.1-alpine
+FROM ruby:2.6.1-alpine as Builder
 
 
 #FROM ruby:alpine3.9 as builder
@@ -49,11 +49,17 @@ RUN rm -rf spec node_modules app/assets vendor/assets lib/assets tmp/cache
 
 ###############################
 # Stage Final
-#FROM builder as final
+FROM ruby:2.6.1-alpine as final
 #LABEL maintainer="mail@georg-ledermann.de"
 
 #ARG ADDITIONAL_PACKAGES
 #ARG EXECJS_RUNTIME
+
+# Add Alpine packages
+RUN apk add --update --no-cache \
+    postgresql-client sqlite-libs \
+    tzdata jq \
+    file
 
 # Add Alpine packages
 # RUN apk add --update --no-cache \
@@ -62,6 +68,9 @@ RUN rm -rf spec node_modules app/assets vendor/assets lib/assets tmp/cache
 #     nodejs-current build-base git jq \
 #     tzdata \
 #     file
+
+COPY --from=Builder /usr/local/bundle/ /usr/local/bundle/
+COPY --from=builder /app /app
 
 COPY run.sh /usr/bin/
 RUN chmod +x /usr/bin/run.sh
@@ -78,9 +87,9 @@ RUN chmod +x /usr/bin/run.sh
 # Set Rails env
 ENV RAILS_LOG_TO_STDOUT true
 ENV RAILS_SERVE_STATIC_FILES true
-ENV EXECJS_RUNTIME "Node"
+ENV EXECJS_RUNTIME "Disabled"
 
-# WORKDIR /app
+WORKDIR /app
 
 # Expose Puma port
 EXPOSE 3000
