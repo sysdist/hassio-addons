@@ -67,6 +67,12 @@ def switch_off(active_user, tag_id = nil)
   update(state: :online ,current_user: nil, current_tnx: nil)
 end
 
+def mqtt_refresh_state()
+  mq = MqttClient.new
+  mq.send_message('cmnd/sonoff1/teleperiod',frequency)
+end
+
+
 def mqtt_get_state()
   mq = MqttClient.new
   mqtt_state =  mq.get_message(json_attributes_topic)

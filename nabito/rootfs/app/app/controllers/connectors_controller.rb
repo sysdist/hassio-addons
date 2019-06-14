@@ -3,6 +3,7 @@ class ConnectorsController < ApplicationController
   before_action :authenticate_user!
 
   def switch_on
+    @connector.mqtt_refresh_state()
     #return unless user_approved
     if correct_action("switch_on")
       @connector.switch_on(current_user)
@@ -12,6 +13,7 @@ class ConnectorsController < ApplicationController
   end
   
   def switch_off
+    @connector.mqtt_refresh_state()    
     #return unless user_approved
     if correct_action("switch_off")
       @connector.switch_off(current_user)  
@@ -28,6 +30,7 @@ class ConnectorsController < ApplicationController
   # GET /connectors/1
   # GET /connectors/1.json
   def show
+    @connector.mqtt_refresh_state()
   end
 
   # GET /connectors/new

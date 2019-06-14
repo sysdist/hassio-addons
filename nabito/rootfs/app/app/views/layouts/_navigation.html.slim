@@ -33,7 +33,8 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
   #navbarSupportedContent.collapse.navbar-collapse
     ul.navbar-nav.mr-auto
       li.nav-item = link_to t('.connectors'), connectors_path, class: "nav-link"
-      li.nav-item = link_to t('.transactions'), transactions_path, class: "nav-link"      
+      li.nav-item = link_to t('.transactions'), transactions_path, class: "nav-link"
+      / li.nav-item = link_to t('.data'), connector_states_path, class: "nav-link"            
       / li.nav-item
       /   a.nav-link.disabled[href="#"]
       /     | Disabled
