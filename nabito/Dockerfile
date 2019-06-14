@@ -69,20 +69,23 @@ RUN apk add --update --no-cache \
 #     tzdata \
 #     file
 
-COPY --from=Builder /usr/local/bundle/ /usr/local/bundle/
-COPY --from=builder /app /app
+# Add user
+RUN addgroup -g 1000 -S app \
+ && adduser -u 1000 -S app -G app
+
+
+# Copy app with gems from former build stage
+COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
+COPY --from=builder --chown=app:app /app /app
+
+
+#COPY --from=Builder /usr/local/bundle/ /usr/local/bundle/
+#COPY --from=builder /app /app
 
 COPY run.sh /usr/bin/
 RUN chmod +x /usr/bin/run.sh
 
-# # Add user
-# RUN addgroup -g 1000 -S app \
-#  && adduser -u 1000 -S app -G app
-# USER app
-
-# # Copy app with gems from former build stage
-# COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
-# COPY --from=builder --chown=app:app /app /app
+USER app
 
 # Set Rails env
 ENV RAILS_LOG_TO_STDOUT true
