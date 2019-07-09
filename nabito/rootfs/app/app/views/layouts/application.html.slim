@@ -20,8 +20,7 @@ html
         == yield
         == render 'layouts/footer'
       -else
-        .side-body
-          .container
-            == render 'layouts/messages'
-            == yield
-            == render 'layouts/footer'
+        .container
+          == render 'layouts/messages'
+          == yield
+          == render 'layouts/footer'

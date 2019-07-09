@@ -23,6 +23,7 @@
 #  updated_at            :datetime         not null
 #  user_id               :integer
 #  current_kWh           :decimal(, )
+#  shadow_state          :string
 #
 
 class Connector < ApplicationRecord
@@ -30,6 +31,7 @@ class Connector < ApplicationRecord
   belongs_to :user
 
   enum state: { offline: "OFFLINE", online: "ONLINE", active: "ACTIVE", error: "ERROR" }
+  #enum shadow_state: { offline: "OFFLINE", online: "ONLINE", active: "ACTIVE", error: "ERROR" }
 
   def in_use
     active?  
@@ -49,7 +51,8 @@ class Connector < ApplicationRecord
     tnx.start()
     tnx.save()
 
-    update(state: :active,current_user: active_user.id, current_tnx: tnx.id, current_kWh: kWhs)
+    update(shadow_state: :active,current_user: active_user.id, current_tnx: tnx.id, current_kWh: kWhs)
+    sync_state()
 
 end
 
@@ -64,7 +67,8 @@ def switch_off(active_user, tag_id = nil)
   tnx.save
   tnx.finish
 
-  update(state: :online ,current_user: nil, current_tnx: nil)
+  update(shadow_state: :online ,current_user: nil, current_tnx: nil)
+  sync_state()
 end
 
 def mqtt_refresh_state()
@@ -81,8 +85,36 @@ end
 
 def state_energy_total
   mqtt_get_state()
+  energy_total()
+end
+
+def energy_total
   return @json_state["ENERGY"]["Total"] if @json_state 
   return nil
+end
+
+def power
+  return @json_state["ENERGY"]["Power"] if @json_state 
+  return nil
+end
+
+
+#tele/sonoff1/SENSOR 
+#{"Time":"2019-06-18T08:57:19","ENERGY":{"TotalStartTime":"2019-01-30T13:44:46","Total":38.854,"Yesterday":0.354,"Today":0.000,"Period":0,"Power":0,"ApparentPower":0,"ReactivePower":0,"Factor":0.00,"Voltage":0,"Current":0.000}}
+
+def sync_state()
+  mqtt_get_state()
+  ts_now = Time.now.utc
+  puts "UTC time now: " + ts_now.to_s
+  puts "connector time: " + @json_state["Time"] 
+  last_ts = @json_state["Time"] + " +0000" #make sure its UTC timestamp
+  ts1 = Time.parse(last_ts)
+  if (ts_now - ts1) > 600
+    update(state: :offline)
+  else  #connector is reachable, sync it's state with shadow
+    update(state: shadow_state)
+  end
+
 end
 
 def meter_values(iot_client)

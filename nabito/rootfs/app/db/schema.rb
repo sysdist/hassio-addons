@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_13_181026) do
+ActiveRecord::Schema.define(version: 2019_06_28_103427) do
 
   create_table "connectors", force: :cascade do |t|
     t.string "name"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2019_03_13_181026) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.decimal "current_kWh"
+    t.string "shadow_state"
     t.index ["user_id"], name: "index_connectors_on_user_id"
   end
 
@@ -62,6 +63,7 @@ ActiveRecord::Schema.define(version: 2019_03_13_181026) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -1,7 +1,8 @@
 .row
   .col-md-12.text-right
     span = button_to "Refresh", "", { :onclick => "history.go(0)", :method => :get, class: ["btn-default"] } 
-    span = link_to t('.edit_connector'), edit_connector_path(@connector), class: ["btn-yellow"]
+    - if current_user.admin
+        span = link_to t('.edit _connector'), edit_connector_path(@connector), class: ["btn-yellow"]
  
 .row
   .col-md-12
@@ -13,7 +14,7 @@
           table.table.table-bordered.table-hover
             tbody
               tr
-                th = "Status:"
+                th = "Status"
                 td = @connector.state
 .row
   .col-md-12
@@ -21,20 +22,26 @@
       table.table.table-bordered.table-hover.text-center
         tbody
           tr
-            th = "Current power:"
+            th = "Current power"
             td
               - if @connector.in_use
-                  h2 =  @connector.current_kWh.to_s + " kWhs"
+                  strong =  @connector.power.to_s + " W"
               - else
-                  h2 = "0 Watts" 
+                  strong = "0 Watts" 
+          tr
+            th = "Meter" 
+            td = @connector.energy_total.to_s +  " kWh"
 - if !@connector.offline?                        
-    .row
-      .col-md-offset-0.col-md-2.col-xs-offset-1.col-xs-4
+    .row  
+      .col-md-6.text-center.col-xs-3
         = link_to "ON", switch_on_connector_path(@connector), class: ["btn", "btn-primary", "btn-lg"]
         |&nbsp;    
-      .col-md-offset-0.col-md-2.col-xs-offset-2.col-xs-4
+      .col-md-6.text-center.col-xs-3
         = link_to "OFF", switch_off_connector_path(@connector), class: ["btn", "btn-secondary", "btn-lg"]            
-        |&nbsp;        
+        |&nbsp;
+    .row
+      .col-md-12
+        |&nbsp;
 / - if @connector.in_use                
 /     .row
 /       .col-md-12

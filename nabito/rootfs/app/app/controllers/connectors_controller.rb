@@ -30,7 +30,8 @@ class ConnectorsController < ApplicationController
   # GET /connectors/1
   # GET /connectors/1.json
   def show
-    @connector.mqtt_refresh_state()
+    #@connector.mqtt_refresh_state()
+    @connector.sync_state()
   end
 
   # GET /connectors/new

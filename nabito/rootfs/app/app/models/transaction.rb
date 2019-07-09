@@ -33,5 +33,14 @@ class Transaction < ApplicationRecord
     
   end
 
+  def creditor
+    User.find_by_id(creditor_id)
+  end
+
+  def debtor
+    User.find_by_id(debtor_id)
+  end
+
+
 
 end

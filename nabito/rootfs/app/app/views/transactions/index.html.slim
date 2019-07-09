@@ -1,43 +1,59 @@
 h1 Listing transactions
 
-table
+.list-group
+  - @transactions.each do |transaction|
+    a href=transaction_path(transaction) class="list-group-item list-group-item-action"
+      .row
+        .col-sm-3
+          span = transaction.date_posted
+        .col-sm-3
+          span = transaction.kWhs_used
+          |  
+          span = transaction.currency
+        .col-sm-3
+          span = "start: " + transaction.created_at.to_s
+          br
+          span = "finish: " + transaction.completed_at.to_s
+        .col-sm-3
+          span = "user: " + transaction.debtor.email
+
+
+/        span = transaction.kWhs_used
+
+
+
+table.table.table-responsive.table-striped
   thead
     tr
-      th Debtor
-      th Creditor
-      th Connector
+      th Date
       th Kwhs used
       th Average price per kwh
-      th Currency
       th Amount
-      th Date posted
-      th Completed at
+      th Currency
+      th Started
+      th Finished
       th Status
       th Meter kwhs start
       th Meter kwhs finish
-      th
-      th
-      th
-
+ 
   tbody
     - @transactions.each do |transaction|
-      tr
-        td = transaction.debtor_id
-        td = transaction.creditor_id
-        td = transaction.connector.id
+      tr 
+        td = transaction.date_posted
         td = transaction.kWhs_used
         td = transaction.average_price_per_kWh
-        td = transaction.currency
         td = transaction.amount
-        td = transaction.date_posted
+        td = transaction.currency
+        td = transaction.created_at
         td = transaction.completed_at
         td = transaction.status
         td = transaction.meter_kWhs_start
         td = transaction.meter_kWhs_finish
-        td = link_to 'Show', transaction
-        td = link_to 'Edit', edit_transaction_path(transaction)
-        td = link_to 'Destroy', transaction, data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 
-= link_to 'New Transaction', new_transaction_path
+/= link_to 'New Transaction', new_transaction_path
+
+/        td = link_to 'Show', transaction
+/        td = link_to 'Edit', edit_transaction_path(transaction)
+/        td = link_to 'Destroy', transaction, data: { confirm: 'Are you sure?' }, method: :delete
