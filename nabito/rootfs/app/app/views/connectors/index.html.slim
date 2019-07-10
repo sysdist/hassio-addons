@@ -1,28 +1,46 @@
 h1 Listing connectors
 
-table.table.table-responsive.table-striped
-  thead
-    tr
-      th Owner
-      th Name
-      th Command topic
-      th State topic
-      th Power
-      th Price per kwh
-      th State
-
-  tbody
-    - @connectors.each do |connector|
-      tr
-        td = connector.user.email
-        td = link_to connector.name, connector
-        td = connector.command_topic
-        td = connector.state_topic
-        td = connector.power
-        td = connector.price_per_kWh
-        td = connector.state
-
 br
+.list-group
+  - @connectors.each do |connector|
+    a href=connector_path(connector) class="list-group-item list-group-item-action"
+      .row
+        .col-sm-3
+          span = connector.user.email
+        .col-sm-2
+          span = "Status: " + connector.state
+          br
+          span = connector.power
+        .col-sm-4
+          span = connector.command_topic
+          br  
+          span = connector.state_topic
+        .col-sm-3
+          span = "Price per kWh: " + connector.price_per_kWh.to_s
+
+/ table.table.table-responsive.table-striped
+/   thead
+/     tr
+/       th Owner
+/       th Name
+/       th Command topic
+/       th State topic
+/       th Power
+/       th Price per kwh
+/       th State
+
+/   tbody
+/     - @connectors.each do |connector|
+/       tr
+/         td = connector.user.email
+/         td = link_to connector.name, connector
+/         td = connector.command_topic
+/         td = connector.state_topic
+/         td = connector.power
+/         td = connector.price_per_kWh
+/         td = connector.state
+
+/ br
 
 = link_to 'New Connector', new_connector_path
 

@@ -22,33 +22,33 @@ h1 Listing transactions
 
 
 
-table.table.table-responsive.table-striped
-  thead
-    tr
-      th Date
-      th Kwhs used
-      th Average price per kwh
-      th Amount
-      th Currency
-      th Started
-      th Finished
-      th Status
-      th Meter kwhs start
-      th Meter kwhs finish
+/ table.table.table-responsive.table-striped
+/   thead
+/     tr
+/       th Date
+/       th Kwhs used
+/       th Average price per kwh
+/       th Amount
+/       th Currency
+/       th Started
+/       th Finished
+/       th Status
+/       th Meter kwhs start
+/       th Meter kwhs finish
  
-  tbody
-    - @transactions.each do |transaction|
-      tr 
-        td = transaction.date_posted
-        td = transaction.kWhs_used
-        td = transaction.average_price_per_kWh
-        td = transaction.amount
-        td = transaction.currency
-        td = transaction.created_at
-        td = transaction.completed_at
-        td = transaction.status
-        td = transaction.meter_kWhs_start
-        td = transaction.meter_kWhs_finish
+/   tbody
+/     - @transactions.each do |transaction|
+/       tr 
+/         td = transaction.date_posted
+/         td = transaction.kWhs_used
+/         td = transaction.average_price_per_kWh
+/         td = transaction.amount
+/         td = transaction.currency
+/         td = transaction.created_at
+/         td = transaction.completed_at
+/         td = transaction.status
+/         td = transaction.meter_kWhs_start
+/         td = transaction.meter_kWhs_finish
 
 br
 
