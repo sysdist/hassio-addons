@@ -19,18 +19,26 @@
 #  updated_at            :datetime         not null
 #
 
+# Transaction represents one continuous charging period,
+# when the connector goes OFF->ON (charging)->OFF
 class Transaction < ApplicationRecord
   belongs_to :connector
 
+  after_initialize do
+    if new_record?
+      self.currency = 'EUR' # TODO: setting default currnecy for now
+    end
+  end
+
   def start
-    update(status: "TNX_STARTED")
+    update(status: 'TNX_STARTED')
   end
 
   def finish
     total_kWhs = (meter_kWhs_finish - meter_kWhs_start).to_d
     a = total_kWhs * average_price_per_kWh
-    update(kWhs_used: total_kWhs, amount: a, completed_at: Time.now.utc, status: "TNX_COMPLETE", date_posted: Date.today.to_s)
-    
+    update(kWhs_used: total_kWhs, amount: a, completed_at: Time.now.utc,
+           status: 'TNX_COMPLETE', date_posted: Date.today.to_s)
   end
 
   def creditor

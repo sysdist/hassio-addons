@@ -2,24 +2,24 @@ h1 New connector
 
 == render 'form'
 
-= link_to 'Back', connectors_path
+br
+br
+.text-right
+  = link_to 'Back', connectors_path, class: "btn btn-light"
 
 javascript:
-  $("#connector_name").keypress(function() {
-    //alert( "Handler for .change() called." );
-    //alert(this.val());
-    $("#connector_command_topic").val($("#connector_name").val());
-    $("#connector_state_topic").val($("#connector_name").val());
-    $("#connector_json_attributes_topic").val($("#connector_name").val());
-
+  $("#connector_name").keyup(function() {
+    if ($("#autofill_chbx").prop("checked")) {
+      $("#connector_command_topic").val("cmnd/" + $("#connector_name").val() + "/power");
+      $("#connector_state_topic").val("stat/" + $("#connector_name").val() + "/POWER");
+      $("#connector_json_attributes_topic").val("tele/" + $("#connector_name").val() + "/SENSOR");
+    }
   });
 
   $("#connector_name").change(function() {
-    //alert( "Handler for .change() called." );
-    //alert(this.val());
-    $("#connector_command_topic").val("cmnd/" + $("#connector_name").val() + "/power");
-    $("#connector_state_topic").val("stat/" + $("#connector_name").val() + "/POWER");
-    $("#connector_json_attributes_topic").val("tele/" + $("#connector_name").val() + "/SENSOR");
-
+    if ($("#autofill_chbx").prop("checked")) {
+      $("#connector_command_topic").val("cmnd/" + $("#connector_name").val() + "/power");
+      $("#connector_state_topic").val("stat/" + $("#connector_name").val() + "/POWER");
+      $("#connector_json_attributes_topic").val("tele/" + $("#connector_name").val() + "/SENSOR");
+    }
   });
-

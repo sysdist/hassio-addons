@@ -31,16 +31,12 @@ class ConnectorsController < ApplicationController
   # GET /connectors/1.json
   def show
     # @connector.mqtt_refresh_state()
-    @connector.sync_state()
+    # @connector.sync_state()
   end
 
   # GET /connectors/new
   def new
     @connector = Connector.new
-    @connector.payload_on = 'ON'
-    @connector.payload_off = 'OFF'
-    @connector.state_on = 'ON'
-    @connector.state_off = 'OFF'
   end
 
   # GET /connectors/1/edit
@@ -51,8 +47,8 @@ class ConnectorsController < ApplicationController
   # POST /connectors.json
   def create
     @connector = Connector.new(connector_params)
+    @connector.user_id = current_user.id
   
-
     respond_to do |format|
       if @connector.save
         format.html { redirect_to @connector, notice: 'Connector was successfully created.' }

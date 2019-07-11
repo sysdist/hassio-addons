@@ -16,7 +16,7 @@ Connector.create!([
     state_topic: "stat/sonoff1/POWER",
     json_attributes_topic: "tele/sonoff1/SENSOR", 
     payload_on: "ON", payload_off: "OFF", state_on: "ON", state_off: "OFF", power: "3.6", 
-    voltage: 230, i_max: "16.0", price_per_kWh: "0.1", frequency: 60, state: "online", 
+    voltage: 230, i_max: "16.0", price_per_kWh: "0.1", frequency: 60, state: "offline", 
     current_user: nil, current_tnx: nil, user_id: 1, current_kWh: "10.291"}
 ])
 Transaction.create!([

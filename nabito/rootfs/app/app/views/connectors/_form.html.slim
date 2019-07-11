@@ -8,9 +8,16 @@
 
   .row
     .col-md-6
-      .form-group
-        = f.label :name
-        = f.text_field :name, class: "form-control"
+      .row
+        .col-md-8
+          .form-group
+            = f.label :name
+            = f.text_field :name, class: "form-control"
+        .col-md-4 
+          .form-group
+            label for="autofill_chbx" Autofill MQTT topics
+            br 
+            input#autofill_chbx type="checkbox" name="Autofill topics" checked="true"/
       .form-group
         = f.label :price_per_kWh
         = f.text_field :price_per_kWh, class: "form-control"
@@ -27,7 +34,7 @@
 
   .row
     .col-md-6
-      a.btn.btn-info aria-controls="collapseExample" aria-expanded="false" data-toggle="collapse" href="#collapseExample" role="button" 
+      a.btn.btn-secondary aria-controls="collapseExample" aria-expanded="false" data-toggle="collapse" href="#collapseExample" role="button" 
         | More details
   br
   #collapseExample.collapse.row
@@ -46,7 +53,7 @@
         = f.text_field :state_off, class: "form-control"
     .col-md-6
       .form-group
-        = f.label :power
+        = f.label :power, "Max Power (in kWhs)"
         = f.text_field :power, class: "form-control"
       .form-group
         = f.label :voltage

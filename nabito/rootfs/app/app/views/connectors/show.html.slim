@@ -31,7 +31,7 @@
           tr
             th = "Meter" 
             td = @connector.energy_total.to_s +  " kWh"
-- if !@connector.offline?                        
+- if !@connector.unknown?                        
     .row  
       .col-md-6.text-center.col-xs-3
         = link_to "ON", switch_on_connector_path(@connector), class: ["btn", "btn-primary", "btn-lg"]
@@ -55,8 +55,17 @@
           table.table.table-bordered.table-hover
             tbody
               tr
-                th = "Type:" 
-                td = "CEE 7/5 (Euro plug type E)"
+                th = "Command topic:"
+                td = @connector.command_topic
+              tr
+                th = "State topic:"
+                td = @connector.state_topic
+              tr
+                th = "JSON Attributes topic"
+                td = @connector.json_attributes_topic
+              tr
+                th = "Max Power" 
+                td = @connector.power
               tr
                 th = "Voltage (V)"
                 td = @connector.voltage
