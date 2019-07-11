@@ -30,7 +30,7 @@ class Connector < ApplicationRecord
 
   belongs_to :user
 
-  enum state: { offline: "OFFLINE", online: "ONLINE", active: "ACTIVE", error: "ERROR" }
+  enum state: { offline: 'OFFLINE', online: 'ONLINE', active: 'ACTIVE', error: 'ERROR' }
   #enum shadow_state: { offline: "OFFLINE", online: "ONLINE", active: "ACTIVE", error: "ERROR" }
 
   def in_use
@@ -46,8 +46,10 @@ class Connector < ApplicationRecord
     
     kWhs = state_energy_total()
 
-    tnx = Transaction.create(debtor_id: active_user.id, creditor_id: user_id, connector_id: self.id,
-                              average_price_per_kWh: price_per_kWh, meter_kWhs_start: kWhs) #TODO: tags later , tag_id_start: tag_id)
+    tnx = Transaction.create(debtor_id: active_user.id, creditor_id: user_id,
+                             connector_id: id,
+                             average_price_per_kWh: price_per_kWh,
+                             meter_kWhs_start: kWhs) #TODO: tags later , tag_id_start: tag_id)
     tnx.start()
     tnx.save()
 

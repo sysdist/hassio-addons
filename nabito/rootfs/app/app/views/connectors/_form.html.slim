@@ -5,11 +5,16 @@
       ul
         - @connector.errors.full_messages.each do |message|
           li = message
+
   .row
     .col-md-6
       .form-group
         = f.label :name
         = f.text_field :name, class: "form-control"
+      .form-group
+        = f.label :price_per_kWh
+        = f.text_field :price_per_kWh, class: "form-control"
+    .col-md-6
       .form-group
         = f.label :command_topic
         = f.text_field :command_topic, class: "form-control"
@@ -19,6 +24,14 @@
       .form-group
         = f.label :json_attributes_topic
         = f.text_field :json_attributes_topic, class: "form-control"
+
+  .row
+    .col-md-6
+      a.btn.btn-info aria-controls="collapseExample" aria-expanded="false" data-toggle="collapse" href="#collapseExample" role="button" 
+        | More details
+  br
+  #collapseExample.collapse.row
+    .col-md-6
       .form-group
         = f.label :payload_on
         = f.text_field :payload_on, class: "form-control"
@@ -42,12 +55,6 @@
         = f.label :i_max
         = f.text_field :i_max, class: "form-control"
       .form-group
-        = f.label :price_per_kWh
-        = f.text_field :price_per_kWh, class: "form-control"
-      .form-group
         = f.label :frequency
         = f.number_field :frequency, class: "form-control"
-      .form-group
-        = f.label :state
-        = f.text_field :state, class: "form-control"
-  .actions = f.submit
+  .actions = f.submit class: "btn btn-primary"
