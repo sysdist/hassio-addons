@@ -32,6 +32,9 @@ class ConnectorsController < ApplicationController
   def show
     # @connector.mqtt_refresh_state()
     # @connector.sync_state()
+    # MqttRequestJob.perform_later(@connector)
+    MqttSendJob.perform_later('cmnd/sonoff1/teleperiod', @connector.frequency)
+    ConnectorSyncJob.perform_later(@connector)
   end
 
   # GET /connectors/new

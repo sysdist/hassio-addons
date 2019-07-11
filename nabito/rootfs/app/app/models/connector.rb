@@ -49,7 +49,6 @@ class Connector < ApplicationRecord
       self.state_off = 'OFF'
       self.i_max = 16
       self.voltage = 230
-      self.power = 3.6
     end
   end
 
@@ -85,7 +84,7 @@ class Connector < ApplicationRecord
     tnx.save
     tnx.finish
 
-    update(shadow_state: :off ,current_user: nil, current_tnx: nil)
+    update(shadow_state: :off, current_user: nil, current_tnx: nil)
     sync_state()
   end
 
