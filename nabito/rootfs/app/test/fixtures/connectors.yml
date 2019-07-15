@@ -24,6 +24,8 @@
 #  user_id               :integer
 #  current_kWh           :decimal(, )
 #  shadow_state          :string
+#  json_state            :json
+#  last_timestamp        :datetime
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

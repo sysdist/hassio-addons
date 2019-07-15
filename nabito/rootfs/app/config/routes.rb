@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
     get 'connectors/:id/switch_on', to: 'connectors#switch_on', as: :switch_on_connector
     get 'connectors/:id/switch_off', to: 'connectors#switch_off', as: :switch_off_connector
+    get 'connectors/:id/sync', to: 'connectors#sync', as: :sync_connector
   end
 
   #get 'users/:id/menu', to: 'users#menu', as: :menu_user

@@ -1,8 +1,10 @@
 .row
   .col-md-12.text-right
-    span = button_to "Refresh", "", { :onclick => "history.go(0)", :method => :get, class: ["btn-default"] } 
+    /span = button_to "Refresh", "", { :onclick => "history.go(0)", :method => :get, class: ["btn-default"] } 
+    = link_to "Sync", sync_connector_path(@connector), class: ["btn", "btn-primary", "btn-lg"]
     - if current_user.admin
         span = link_to t('.edit _connector'), edit_connector_path(@connector), class: ["btn-yellow"]
+
  
 .row
   .col-md-12
@@ -16,6 +18,9 @@
               tr
                 th = "Status"
                 td = @connector.state
+              tr
+                th = "JSON"
+                td = @connector.json_state
 .row
   .col-md-12
     .table-responsive
@@ -24,7 +29,7 @@
           tr
             th = "Current power"
             td
-              - if @connector.in_use
+              - if @connector.on?
                   strong =  @connector.power.to_s + " W"
               - else
                   strong = "0 Watts" 

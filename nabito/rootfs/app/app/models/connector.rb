@@ -24,8 +24,11 @@
 #  user_id               :integer
 #  current_kWh           :decimal(, )
 #  shadow_state          :string
+#  json_state            :json
+#  last_timestamp        :datetime
 #
 
+# Generic class for connectors - currently only Sonoff Pow2 implemented
 class Connector < ApplicationRecord
   belongs_to :user
 
@@ -39,7 +42,7 @@ class Connector < ApplicationRecord
 
   after_initialize do
     if new_record?
-      # values will be available for new record forms.
+      # default values for new record
       self.state = 'UNKNOWN'
       self.shadow_state = 'OFF'
       self.frequency = 60
@@ -56,41 +59,39 @@ class Connector < ApplicationRecord
     on?
   end
 
-  @json_state = nil
+  def ping_topic
+    'cmnd/' + name + '/teleperiod'
+  end
 
   def switch_on(active_user, tag_id = nil)
-    mq = MqttClient.new
-    mq.send_message(command_topic,payload_on)
-    kWhs = state_energy_total()
-    tnx = Transaction.create(debtor_id: active_user.id, creditor_id: user_id,
+    ConnectorRequestJob.perform_later(command_topic, payload_on)
+    # TODO: tags later , tag_id_start: tag_id
+    tnx = Transaction.create!(debtor_id: active_user.id, creditor_id: user_id,
                              connector_id: id,
-                             average_price_per_kWh: price_per_kWh,
-                             meter_kWhs_start: kWhs) # TODO: tags later , tag_id_start: tag_id)
-    tnx.start()
-    tnx.save()
+                             average_price_per_kWh: price_per_kWh)
+
+    tnx.save
+
+    ConnectorRequestJob.perform_later(ping_topic, frequency)
+    ConnectorSyncJob.perform_later(id)
+    tnx.start
+
     update(shadow_state: :on, current_user: active_user.id,
-           current_tnx: tnx.id, current_kWh: kWhs)
-    sync_state()
+           current_tnx: tnx.id)
   end
 
   def switch_off(active_user, tag_id = nil)
-
-    mq = MqttClient.new
-    mq.send_message(command_topic,payload_off)    
-
+    ConnectorRequestJob.perform_later(command_topic, payload_off)
+    ConnectorRequestJob.perform_later(ping_topic, frequency)
+    ConnectorSyncJob.perform_later(id)
     tnx = Transaction.find(current_tnx)
-    kWhs = state_energy_total()
-    tnx.meter_kWhs_finish = kWhs #TODO: tags later , tag_id_start: tag_id)tnx.tag_id_finish = tag_id
-    tnx.save
     tnx.finish
-
     update(shadow_state: :off, current_user: nil, current_tnx: nil)
-    sync_state()
   end
 
   def mqtt_refresh_state()
     mq = MqttClient.new
-    mq.send_message('cmnd/sonoff1/teleperiod',frequency)
+    mq.send_message(ping_topic, frequency)
   end
 
   def mqtt_get_state()
@@ -105,14 +106,10 @@ class Connector < ApplicationRecord
   end
 
   def energy_total
-    return @json_state["ENERGY"]["Total"] if @json_state
-    return nil
+    return json_state['ENERGY']['Total'] if json_state
   end
 
-  def power
-    return @json_state["ENERGY"]["Power"] if @json_state
-    return nil
-  end
+
 
 
   #tele/sonoff1/SENSOR 

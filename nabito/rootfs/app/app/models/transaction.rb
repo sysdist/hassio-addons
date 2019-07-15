@@ -31,14 +31,11 @@ class Transaction < ApplicationRecord
   end
 
   def start
-    update(status: 'TNX_STARTED')
+    TransactionUpdateJob.perform_later(self, 'start')
   end
 
   def finish
-    total_kWhs = (meter_kWhs_finish - meter_kWhs_start).to_d
-    a = total_kWhs * average_price_per_kWh
-    update(kWhs_used: total_kWhs, amount: a, completed_at: Time.now.utc,
-           status: 'TNX_COMPLETE', date_posted: Date.today.to_s)
+    TransactionUpdateJob.perform_later(self, 'finish')
   end
 
   def creditor

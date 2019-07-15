@@ -1,5 +1,5 @@
 class ConnectorsController < ApplicationController
-  before_action :set_connector, only: [:show, :edit, :update, :destroy, :switch_on, :switch_off]
+  before_action :set_connector, only: [:show, :edit, :update, :destroy, :switch_on, :switch_off, :sync]
   before_action :authenticate_user!
 
   def switch_on
@@ -21,6 +21,13 @@ class ConnectorsController < ApplicationController
     redirect_to @connector
   end
 
+  def sync
+    ConnectorRequestJob.perform_later(@connector.ping_topic,
+                                      @connector.frequency)
+    ConnectorSyncJob.perform_later(@connector.id)
+    redirect_to @connector
+  end
+
   # GET /connectors
   # GET /connectors.json
   def index
@@ -33,8 +40,7 @@ class ConnectorsController < ApplicationController
     # @connector.mqtt_refresh_state()
     # @connector.sync_state()
     # MqttRequestJob.perform_later(@connector)
-    MqttSendJob.perform_later('cmnd/sonoff1/teleperiod', @connector.frequency)
-    ConnectorSyncJob.perform_later(@connector)
+
   end
 
   # GET /connectors/new

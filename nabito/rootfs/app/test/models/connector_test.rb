@@ -24,6 +24,8 @@
 #  user_id               :integer
 #  current_kWh           :decimal(, )
 #  shadow_state          :string
+#  json_state            :json
+#  last_timestamp        :datetime
 #
 
 require 'test_helper'

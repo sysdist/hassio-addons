@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_28_103427) do
+ActiveRecord::Schema.define(version: 2019_07_12_095845) do
 
   create_table "connectors", force: :cascade do |t|
     t.string "name"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 2019_06_28_103427) do
     t.integer "user_id"
     t.decimal "current_kWh"
     t.string "shadow_state"
+    t.json "json_state"
+    t.datetime "last_timestamp"
     t.index ["user_id"], name: "index_connectors_on_user_id"
   end
 
