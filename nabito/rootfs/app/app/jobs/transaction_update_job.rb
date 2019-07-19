@@ -24,8 +24,8 @@ class TransactionUpdateJob < ApplicationJob
     total_kWhs = (kWhs_finish - @tnx.meter_kWhs_start).to_d
     a = total_kWhs * @tnx.average_price_per_kWh
     @tnx.update(meter_kWhs_finish: @tnx.connector.current_kWh,
-            kWhs_used: total_kWhs, amount: a, completed_at: Time.now.utc,
-            status: 'TNX_COMPLETE', date_posted: Date.today.to_s)
+                kWhs_used: total_kWhs, amount: a, completed_at: Time.now.utc,
+                status: 'TNX_COMPLETE', date_posted: Date.today.to_s)
   end
 
 end
