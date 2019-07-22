@@ -5,7 +5,11 @@ class TransactionsController < ApplicationController
   # GET /transactions
   # GET /transactions.json
   def index
-    @transactions = Transaction.where(debtor_id: current_user.id)
+    if current_user.admin
+      @transactions = Transaction.all
+    else  
+      @transactions = Transaction.where(debtor_id: current_user.id)
+    end
   end
 
   # GET /transactions/1
@@ -72,4 +76,5 @@ class TransactionsController < ApplicationController
     def transaction_params
       params.require(:transaction).permit(:debtor_id, :creditor_id, :connector_id, :kWhs_used, :average_price_per_kWh, :currency, :amount, :date_posted, :completed_at, :status, :meter_kWhs_start, :meter_kWhs_finish)
     end
+
 end

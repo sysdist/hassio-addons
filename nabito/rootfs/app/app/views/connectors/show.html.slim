@@ -1,9 +1,10 @@
 .row
   .col-md-12.text-right
     /span = button_to "Refresh", "", { :onclick => "history.go(0)", :method => :get, class: ["btn-default"] } 
-    = link_to "Sync", sync_connector_path(@connector), class: ["btn", "btn-primary", "btn-lg"]
+    br/
+    = link_to "Sync", sync_connector_path(@connector), class: ["btn", "btn-primary", "btn-sm"]
     - if current_user.admin
-        span = link_to t('.edit _connector'), edit_connector_path(@connector), class: ["btn-yellow"]
+        span = link_to t('.edit _connector'), edit_connector_path(@connector), class: ["btn", "btn-warning", "btn-sm"]
 
  
 .row

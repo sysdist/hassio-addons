@@ -18,32 +18,9 @@ br
         .col-sm-3
           span = "Price per kWh: " + connector.price_per_kWh.to_s
 
-/ table.table.table-responsive.table-striped
-/   thead
-/     tr
-/       th Owner
-/       th Name
-/       th Command topic
-/       th State topic
-/       th Power
-/       th Price per kwh
-/       th State
-
-/   tbody
-/     - @connectors.each do |connector|
-/       tr
-/         td = connector.user.email
-/         td = link_to connector.name, connector
-/         td = connector.command_topic
-/         td = connector.state_topic
-/         td = connector.power
-/         td = connector.price_per_kWh
-/         td = connector.state
-
-/ br
-
-= link_to 'New Connector', new_connector_path
-
+br/
+- if current_user.admin
+  span = link_to 'New Connector', new_connector_path, class: ["btn", "btn-outline-primary", "btn-sm"]
 
 /        td = link_to 'Show', connector
 /        td = link_to 'Edit', edit_connector_path(connector)
